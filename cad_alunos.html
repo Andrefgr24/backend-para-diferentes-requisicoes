@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Alunos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exemplo de Requisições para Registro de Alunos</h1>
+
+    <button onclick="getAlunos()">Listar Alunos (GET)</button>
+    <button onclick="registrarAluno()">Registrar Aluno (POST)</button>
+    <button onclick="atualizarAluno()">Atualizar Aluno (PUT)</button>
+    <button onclick="deletarAluno()">Remover Aluno (DELETE)</button>
+
+    <div id="response"></div>
+
+    <script>
+        // Função para realizar uma requisição GET para listar os alunos
+        function getAlunos() {
+            fetch('http://localhost:3000/alunos')
+                .then(response => response.json())
+                .then(data => document.getElementById('response').innerText = JSON.stringify(data, null, 2))
+                .catch(error => console.error('Erro:', error));
+        }
+
+        // Função para realizar uma requisição POST para registrar um novo aluno
+        function registrarAluno() {
+            fetch('http://localhost:3000/alunos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ matricula: '20241001', nome: 'Maria Silva', email: 'maria@exemplo.com', dataNascimento: '2000-05-15' })
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('response').innerText = JSON.stringify(data, null, 2))
+            .catch(error => console.error('Erro:', error));
+        }
+
+        // Função para realizar uma requisição PUT para atualizar os dados de um aluno
+        function atualizarAluno() {
+            fetch('http://localhost:3000/alunos/1', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ matricula: '20241001', nome: 'Maria Silva Atualizada', email: 'maria_atualizada@exemplo.com', dataNascimento: '2000-05-15' })
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('response').innerText = JSON.stringify(data, null, 2))
+            .catch(error => console.error('Erro:', error));
+        }
+
+        // Função para realizar uma requisição DELETE para remover um aluno
+        function deletarAluno() {
+            fetch('http://localhost:3000/alunos/1', {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('response').innerText = JSON.stringify(data, null, 2))
+            .catch(error => console.error('Erro:', error));
+        }
+    </script>
+</body>
+</html>
